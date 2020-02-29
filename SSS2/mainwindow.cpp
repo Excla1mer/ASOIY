@@ -1,6 +1,9 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-
+#include <QFileDialog>
+#include <QLineEdit>
+#include <QTextStream>
+#include <QMessageBox>
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
@@ -9,6 +12,7 @@ MainWindow::MainWindow(QWidget *parent) :
     QObject::connect(ui->actionDisplay, SIGNAL(triggered(bool)), this, SLOT(lcd_N()));
     QObject::connect(ui->actionCalendar, SIGNAL(triggered(bool)), this, SLOT(calend_D()));
     QObject::connect(ui->actionAuthor, SIGNAL(triggered(bool)), this, SLOT(logo()));
+
 
 }
 
@@ -49,4 +53,64 @@ void MainWindow::logo()
     authors* Logo = new authors();
     Logo->setWindowTitle("Logo");
     Logo->show();
+}
+
+void MainWindow::newFile()
+{
+    ui->textEdit->setEnabled(true);
+}
+
+void MainWindow::saveFile()
+{
+    if(first_save)
+    {
+        first_save = false;
+        file_name = QFileDialog::getSaveFileName(this, tr("SAve file"), "", tr("Text file (*.txt);;(*.doc)"));
+        saveFile();
+    }
+    else {
+        QFile *file = new QFile(file_name);
+        if(!file->open(QIODevice::WriteOnly))
+        {
+            QMessageBox::information(this, tr("Unable to open file"), file->errorString());
+            return;
+        }
+        QTextStream out(file);
+        out <<ui->textEdit->toPlainText();
+        ui->lineEdit->setText(file_name);
+        ui->actionSave->setEnabled(1);
+    }
+}
+
+void MainWindow::saveAsFile()
+{
+
+}
+
+void MainWindow::openFile()
+{
+    ui->progressBar->setValue(0);
+    ui->textEdit->setEnabled(true);
+    file_name = QFileDialog::getOpenFileName(0, "Open File", "/home/ts317c8/1", tr("Text file(*.txt);;All files(*.*"));
+    QFile file(file_name);
+    file.open(QIODevice::ReadOnly|QIODevice::Text);
+    QTextStream readStream(&file);
+    ui->textEdit->clear();
+    while(!readStream.atEnd()) {
+        ui->textEdit->setText(ui->textEdit->toPlainText()+readStream.readLine()+"\n");
+    }
+    file.close();
+    ui->lineEdit->setText(file_name);
+    ui->actionSave->setEnabled(1);
+
+    for(int i = 0; i <= 100; i++)
+    {
+        ui->progressBar->setValue(i);
+    }
+
+}
+
+void MainWindow::autosave()
+{
+
 }

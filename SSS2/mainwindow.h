@@ -9,7 +9,6 @@
 #include <QSlider>
 #include <dialog.h>
 #include <authors.h>
-
 namespace Ui {
 class MainWindow;
 }
@@ -26,11 +25,18 @@ private:
     Ui::MainWindow *ui;
     QLCDNumber *Lcd;
     QSlider *VSlider;
+    QString file_name;
+    bool first_save;
 
 public slots:
     void calend_D();
     void lcd_N();
     void logo();
+    void newFile();
+    void saveFile();
+    void saveAsFile();
+    void openFile();
+    void autosave();
 
 };
 
