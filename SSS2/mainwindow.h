@@ -9,6 +9,7 @@
 #include <QSlider>
 #include <dialog.h>
 #include <authors.h>
+#include <QTimer>
 namespace Ui {
 class MainWindow;
 }
@@ -27,6 +28,8 @@ private:
     QSlider *VSlider;
     QString file_name;
     bool first_save;
+    QString str;
+    QTimer *timer = new QTimer(this);
 
 public slots:
     void calend_D();
@@ -37,6 +40,7 @@ public slots:
     void saveAsFile();
     void openFile();
     void autosave();
+    void setTimeForAutosave();
 
 };
 

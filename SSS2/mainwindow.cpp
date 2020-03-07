@@ -4,6 +4,7 @@
 #include <QLineEdit>
 #include <QTextStream>
 #include <QMessageBox>
+#include <QTemporaryFile>
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
@@ -12,7 +13,13 @@ MainWindow::MainWindow(QWidget *parent) :
     QObject::connect(ui->actionDisplay, SIGNAL(triggered(bool)), this, SLOT(lcd_N()));
     QObject::connect(ui->actionCalendar, SIGNAL(triggered(bool)), this, SLOT(calend_D()));
     QObject::connect(ui->actionAuthor, SIGNAL(triggered(bool)), this, SLOT(logo()));
-
+    QObject::connect(ui->actionCreate_File, SIGNAL(triggered(bool)), this, SLOT(newFile()));
+    QObject::connect(ui->actionSave, SIGNAL(triggered(bool)), this, SLOT(saveFile()));
+    QObject::connect(ui->actionOpen_File, SIGNAL(triggered(bool)), this, SLOT(openFile()));
+    QObject::connect(ui->spinBox, SIGNAL(valeChanged(int)), this, SLOT(setTimeForAutosave()));
+    timer->start(ui->spinBox->value()*1000);
+    QObject::connect(timer, SIGNAL(timeout()),this, SLOT(autosave()));
+    ui->progressBar->setValue(0);
 
 }
 
@@ -58,6 +65,8 @@ void MainWindow::logo()
 void MainWindow::newFile()
 {
     ui->textEdit->setEnabled(true);
+    ui->actionSave->setEnabled(true);
+
 }
 
 void MainWindow::saveFile()
@@ -84,11 +93,27 @@ void MainWindow::saveFile()
 
 void MainWindow::saveAsFile()
 {
-
+    ui->progressBar->setValue(0);
+    file_name=QFileDialog::getSaveFileName(this,tr("Save file ..."),"",tr("Text file(*.txt);; All files(*.*)"));
+    QFile file(file_name);
+    file.open(QIODevice::WriteOnly|QIODevice::Text);
+    str=ui->textEdit->toPlainText();
+    str=str+"\n\n";
+    QTextStream writeStream(&file);
+    writeStream<<str;
+    file.close();
+    ui->textEdit->setText(str);
+    ui->lineEdit->setText(file_name);
+    for (int i=0;i<=100;i++) {
+        ui->progressBar->setValue(i);
+    }
+    ui->actionSave->setEnabled(1);
+    ui->progressBar->setValue(0);
 }
 
 void MainWindow::openFile()
 {
+    ui->actionSave->setEnabled(true);
     ui->progressBar->setValue(0);
     ui->textEdit->setEnabled(true);
     file_name = QFileDialog::getOpenFileName(0, "Open File", "/home/ts317c8/1", tr("Text file(*.txt);;All files(*.*"));
@@ -107,10 +132,38 @@ void MainWindow::openFile()
     {
         ui->progressBar->setValue(i);
     }
-
+    ui->progressBar->setValue(0);
 }
 
 void MainWindow::autosave()
 {
+    QString _str = ui->textEdit->toPlainText();
+    if(_str.size() == 0) { return; }
+    ui->statusBar->clearMessage();
 
+    QTemporaryFile tmpFile;
+    tmpFile.setAutoRemove(true);
+    tmpFile.open();
+    QTextStream writeStream(&tmpFile);
+    writeStream<<ui->textEdit->toPlainText();
+
+    for (int i=0; i<=101; i++) {
+        QCoreApplication::processEvents(QEventLoop::AllEvents, 100);
+        ui->progressBar->setValue(i);
+    }
+    tmpFile.close();
+    ui->statusBar->showMessage("Saving to tmpFile" + tmpFile.fileName() + " " + QString::number(ui->spinBox->value()) + "sec");
+    ui->progressBar->reset();
 }
+
+void MainWindow::setTimeForAutosave()
+{
+
+    if(ui->spinBox->value() == 0) {
+        timer->stop();
+        return;
+    }
+    timer->start(ui->spinBox->value()*1000);
+}
+
+
