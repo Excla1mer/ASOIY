@@ -3,6 +3,7 @@
 
 #include <QDialog>
 #include "mainwindow.h"
+#include <QString>
 namespace Ui {
 class Dialog;
 }
@@ -14,12 +15,14 @@ class Dialog : public QDialog
 public:
     explicit Dialog(QWidget *parent = nullptr);
     ~Dialog();
+    QString sDate();
 
 private:
     Ui::Dialog *ui;
 
 protected:
-    virtual void closeEvent(QCloseEvent *event);
+    //virtual void closeEvent(QCloseEvent *event);
+
 };
 
 #endif // DIALOG_H

@@ -10,6 +10,7 @@
 #include <dialog.h>
 #include <authors.h>
 #include <QTimer>
+#include "dialog.h"
 namespace Ui {
 class MainWindow;
 }
@@ -41,7 +42,11 @@ public slots:
     void openFile();
     void autosave();
     void setTimeForAutosave();
+    void on_pushButton_date_clicked();
 
+private slots:
+    void on_pushButton_2_clicked();
+    void on_pushButton_clicked();
 };
 
 #endif // MAINWINDOW_H

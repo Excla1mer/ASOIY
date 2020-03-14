@@ -5,6 +5,10 @@
 #include <QTextStream>
 #include <QMessageBox>
 #include <QTemporaryFile>
+#include <QString>
+#include <QPalette>
+#include <QColorDialog>
+#include <QFontDialog>
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
@@ -20,7 +24,9 @@ MainWindow::MainWindow(QWidget *parent) :
     timer->start(ui->spinBox->value()*1000);
     QObject::connect(timer, SIGNAL(timeout()),this, SLOT(autosave()));
     ui->progressBar->setValue(0);
+    QObject::connect(ui->fontComboBox,SIGNAL(currentFontChanged(QFont)), ui->textEdit,SLOT(setCurrentFont(QFont)));
 
+ui->pushButton->setToolTip("Sets current date");
 }
 
 MainWindow::~MainWindow()
@@ -30,7 +36,7 @@ MainWindow::~MainWindow()
 
 void MainWindow::calend_D()
 {
-    this->hide();
+    //this->hide();
     Dialog* Calendar = new Dialog();
     Calendar->setWindowTitle("Calendar");
     Calendar->show();
@@ -166,4 +172,16 @@ void MainWindow::setTimeForAutosave()
     timer->start(ui->spinBox->value()*1000);
 }
 
+void MainWindow::on_pushButton_2_clicked()
+{
+    ui->textEdit->setTextColor(QColorDialog::getColor());
+    ui->spinBox->setToolTip("Sets text color");
+}
 
+void MainWindow::on_pushButton_clicked()
+{
+    Dialog gd;
+    ui->textEdit->append(gd.sDate());
+
+
+}
