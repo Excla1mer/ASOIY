@@ -6,46 +6,33 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>394</width>
+    <width>638</width>
     <height>352</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Dialog</string>
   </property>
-  <widget class="QPushButton" name="Input">
+  <widget class="QLabel" name="upload_photo">
    <property name="geometry">
     <rect>
-     <x>180</x>
-     <y>320</y>
-     <width>75</width>
-     <height>23</height>
+     <x>320</x>
+     <y>20</y>
+     <width>291</width>
+     <height>281</height>
     </rect>
    </property>
    <property name="text">
-    <string>Input</string>
-   </property>
-  </widget>
-  <widget class="QPushButton" name="Close">
-   <property name="geometry">
-    <rect>
-     <x>270</x>
-     <y>320</y>
-     <width>75</width>
-     <height>23</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>Close</string>
+    <string/>
    </property>
   </widget>
   <widget class="QWidget" name="">
    <property name="geometry">
     <rect>
-     <x>43</x>
-     <y>13</y>
-     <width>301</width>
-     <height>271</height>
+     <x>31</x>
+     <y>18</y>
+     <width>271</width>
+     <height>281</height>
     </rect>
    </property>
    <layout class="QGridLayout" name="gridLayout">
@@ -132,6 +119,39 @@
        <widget class="QLineEdit" name="key_word"/>
       </item>
      </layout>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QWidget" name="">
+   <property name="geometry">
+    <rect>
+     <x>30</x>
+     <y>310</y>
+     <width>271</width>
+     <height>25</height>
+    </rect>
+   </property>
+   <layout class="QHBoxLayout" name="horizontalLayout">
+    <item>
+     <widget class="QPushButton" name="upload_button">
+      <property name="text">
+       <string>upload photo</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QPushButton" name="Input">
+      <property name="text">
+       <string>Input</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QPushButton" name="Close">
+      <property name="text">
+       <string>Close</string>
+      </property>
+     </widget>
     </item>
    </layout>
   </widget>

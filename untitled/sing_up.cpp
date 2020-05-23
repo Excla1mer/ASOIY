@@ -1,7 +1,7 @@
 #include "sing_up.h"
 #include "ui_sing_up.h"
 #include <QMessageBox>
-
+#include  "QFileDialog"
 Sing_up::Sing_up(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::Sing_up)
@@ -22,7 +22,7 @@ void Sing_up::on_Close_clicked()
 
 void Sing_up::on_Input_clicked()
 {
-    QString FIO, login, password, re_password, role, kode;
+    QString FIO, login, password, re_password, role, kode, Photo;
     QString test;
     QString DATA =  "4.18.2020";
     QString msg =  "Invalid pass  or login :(";
@@ -34,7 +34,9 @@ void Sing_up::on_Input_clicked()
     re_password = ui->re_password->text();
     role = ui->role->currentText();
     kode = ui->key_word->text();
+    Photo = ui->upload_photo->text();
     QSqlTableModel model;
+    QSqlTableModel model1;
     model.setTable("table1");
     model.select();
     if(password ==  re_password)
@@ -61,5 +63,20 @@ void Sing_up::on_Input_clicked()
     }
     qDebug()<<"count="<<count;
 
+
+}
+
+void Sing_up::on_upload_button_clicked()
+{
+    QString foto;
+    foto=QFileDialog::getOpenFileName(0,"ВЫбор фото ...", QDir::homePath(), tr("*.png;; *.jpg;;*.gif;;*.bmp"));
+        if (foto.isEmpty())
+        {
+            return; //  выйти из метода
+        }
+        else{
+        ui->upload_photo->setPixmap(QPixmap::fromImage(QImage(foto)).scaled(300,200));
+        }
+    //    ui->lblFoto->setPixmap(QPixmap::fromImage(QImage("../Project/xx.png")));
 
 }

@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>502</width>
+    <width>622</width>
     <height>300</height>
    </rect>
   </property>
@@ -68,7 +68,7 @@
   <widget class="QPushButton" name="cancel">
    <property name="geometry">
     <rect>
-     <x>10</x>
+     <x>410</x>
      <y>270</y>
      <width>75</width>
      <height>23</height>
@@ -83,9 +83,35 @@
     <rect>
      <x>10</x>
      <y>40</y>
-     <width>471</width>
+     <width>381</width>
      <height>181</height>
     </rect>
+   </property>
+  </widget>
+  <widget class="QLabel" name="picture">
+   <property name="geometry">
+    <rect>
+     <x>410</x>
+     <y>40</y>
+     <width>181</width>
+     <height>181</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="DB">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>270</y>
+     <width>75</width>
+     <height>23</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Show DB</string>
    </property>
   </widget>
  </widget>

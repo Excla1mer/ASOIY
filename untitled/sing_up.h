@@ -23,6 +23,8 @@ private slots:
 
     void on_Input_clicked();
 
+    void on_upload_button_clicked();
+
 private:
     Ui::Sing_up *ui;
 
